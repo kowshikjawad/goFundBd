@@ -1,18 +1,46 @@
-const express = require('express');
-const { Request, Response } = require('express');
-import db from './config/database';
+import express, { Application } from "express";
+import * as trpcExpress from "@trpc/server/adapters/express";
+import { appRouter } from "./router";
+import cors from "cors";
+import { expressHandler } from "trpc-playground/handlers/express";
+import dotenv from "dotenv";
+import { createContext } from "./config/trpc";
 
-const app = express();
-app.use(express.json());
+const runApp = async () => {
+  dotenv.config();
+  const app: Application = express();
+  app.use(cors());
+  app.use(express.json());
 
+  const trpcApiEndpoint = "/api/trpc";
+  const playgroundEndpoint = "/api/trpc-playground";
 
-db.on('error', (err) => {
-  console.error('Error connecting to database:', err);
-  // Handle the error appropriately (e.g., log, retry, exit)
-}); 
+  app.use(
+    trpcApiEndpoint,
+    trpcExpress.createExpressMiddleware({
+      router: appRouter,
+      createContext: createContext,
+    })
+  );
 
+  app.use(
+    playgroundEndpoint,
+    await expressHandler({
+      trpcApiEndpoint,
+      playgroundEndpoint,
+      router: appRouter,
+      // uncomment this if you're using superjson
+      // request: {
+      //   superjson: true,
+      // },
+    })
+  );
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+  const port = process.env.PORT ?? 3000;
+
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+};
+
+runApp();
