@@ -1,0 +1,5 @@
+model Category {
+  category_id String     @id @unique
+  name        String
+  campaigns   Campaign[]
+}

@@ -1,0 +1,19 @@
+enum Role {
+  Donor
+  CampaignOwner
+  Admin
+}
+
+model User {
+  user_id      Int            @id @default(autoincrement())
+  display_name String
+  email        String         @unique
+  password     String
+  role         Role
+  created_at   DateTime       @default(now())
+  Campaign     Campaign[]
+  Donation     Donation[]
+  Comment      Comment[]
+  Notification Notification[]
+  Chat         Chat[]
+}

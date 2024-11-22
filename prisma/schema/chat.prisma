@@ -1,0 +1,10 @@
+model Chat {
+  chat_id     Int      @id @default(autoincrement())
+  user_id     Int
+  campaign_id Int
+  content     String
+  created_at  DateTime @default(now())
+
+  user     User     @relation(fields: [user_id], references: [user_id])
+  campaign Campaign @relation(fields: [campaign_id], references: [campaign_id])
+}
