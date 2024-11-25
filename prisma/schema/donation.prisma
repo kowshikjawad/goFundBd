@@ -1,9 +1,9 @@
 model Donation {
-  donation_id   Int      @id @default(autoincrement())
+  donation_id   String      @id @default(uuid())
   amount        Float
   donation_date DateTime @default(now())
-  user_id       Int
-  campaign_id   Int
+  user_id       String
+  campaign_id   String
 
   user     User      @relation(fields: [user_id], references: [user_id])
   campaign Campaign  @relation(fields: [campaign_id], references: [campaign_id])

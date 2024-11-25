@@ -11,8 +11,8 @@ enum PaymentMethod {
 }
 
 model Payment {
-  payment_id         Int           @id @default(autoincrement())
-  donation_id        Int
+  payment_id         String           @id @default(uuid())
+  donation_id        String
   payment_method     PaymentMethod
   payment_status     PaymentStatus
   transaction_date   DateTime      @default(now())

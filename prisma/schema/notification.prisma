@@ -1,7 +1,7 @@
 model Notification {
-  notification_id Int      @id @default(autoincrement())
-  user_id         Int
-  campaign_id     Int
+  notification_id String      @id @default(uuid())
+  user_id         String
+  campaign_id     String
   message         String
   is_read         Boolean  @default(false)
   created_at      DateTime @default(now())

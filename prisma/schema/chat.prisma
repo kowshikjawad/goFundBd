@@ -1,7 +1,7 @@
 model Chat {
-  chat_id     Int      @id @default(autoincrement())
-  user_id     Int
-  campaign_id Int
+  chat_id     String      @id @default(uuid())
+  user_id     String
+  campaign_id String
   content     String
   created_at  DateTime @default(now())
 
