@@ -3,3 +3,9 @@ export const successResponse = (data: any, code: number) => ({
   code,
   data,
 });
+
+export const errorResponse = (error: unknown, trpcError: unknown) => ({
+  status: "error",
+  error,
+  trpcError,
+});

@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { successResponse } from "../../utils/httpResponse";
+import { errorResponse, successResponse } from "../../utils/httpResponse";
 import {
   createUserService,
   currentUserService,
@@ -17,7 +17,7 @@ export const createUserController = async (input: TCreateUserInput) => {
       code: "INTERNAL_SERVER_ERROR",
       message: "An unexpected error occurred, please try again later.",
     });
-    return trpcError;
+    return errorResponse(error, trpcError);
   }
 };
 
@@ -30,7 +30,7 @@ export const userLoginController = async (input: TLoginUserInput) => {
       code: "INTERNAL_SERVER_ERROR",
       message: "An unexpected error occurred, please try again later.",
     });
-    return trpcError;
+    return errorResponse(error, trpcError);
   }
 };
 
@@ -43,7 +43,7 @@ export const getUsersController = async () => {
       code: "INTERNAL_SERVER_ERROR",
       message: "An unexpected error occurred, please try again later.",
     });
-    return trpcError;
+    return errorResponse(error, trpcError);
   }
 };
 
@@ -63,7 +63,7 @@ export const currentUserController = async (ctx: TAuthContext) => {
       code: "INTERNAL_SERVER_ERROR",
       message: "An unexpected error occurred, please try again later.",
     });
-    return trpcError;
+    return errorResponse(error, trpcError);
   }
 };
 
