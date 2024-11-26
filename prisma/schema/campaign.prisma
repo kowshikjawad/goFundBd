@@ -5,7 +5,7 @@ enum CampaignStatus {
 }
 
 model Campaign {
-  campaign_id   String           @id @default(uuid())
+  campaign_id   String         @id @default(uuid())
   title         String
   description   String
   goal_amount   Float
@@ -13,7 +13,7 @@ model Campaign {
   status        CampaignStatus
   start_date    DateTime
   end_date      DateTime
-  category_id   Int
+  category_id   String
   owner_id      String
 
   category     Category       @relation(fields: [category_id], references: [category_id])

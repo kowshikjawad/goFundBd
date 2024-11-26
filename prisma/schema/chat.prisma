@@ -1,5 +1,5 @@
 model Chat {
-  chat_id     String      @id @default(uuid())
+  chat_id     String   @id @default(uuid())
   user_id     String
   campaign_id String
   content     String

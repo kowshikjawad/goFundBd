@@ -11,7 +11,7 @@ enum PaymentMethod {
 }
 
 model Payment {
-  payment_id         String           @id @default(uuid())
+  payment_id         String        @id @default(uuid())
   donation_id        String
   payment_method     PaymentMethod
   payment_status     PaymentStatus
