@@ -1,5 +1,6 @@
 model Category {
-  category_id String     @id @unique
+  category_id Int        @id @default(autoincrement())
   name        String
   campaigns   Campaign[]
 }
+

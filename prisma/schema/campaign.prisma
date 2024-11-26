@@ -13,7 +13,7 @@ model Campaign {
   status        CampaignStatus
   start_date    DateTime
   end_date      DateTime
-  category_id   String
+  category_id   Int
   owner_id      String
 
   category     Category       @relation(fields: [category_id], references: [category_id])
