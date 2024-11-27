@@ -7,11 +7,11 @@ import {
   getCategoryController,
   updateCategoryController,
 } from "./category.controller";
-import { categoryValidationSchemas } from "./category.validation";
-
-// Reusable Zod Schemas for validation
-const { categoryNameSchema, categoryUpdateSchema, categoryIdSchema } =
-  categoryValidationSchemas;
+import {
+  categoryIdSchema,
+  categoryNameSchema,
+  categoryUpdateSchema,
+} from "./category.validation";
 
 // Middleware for all procedures
 const trpcProcedure = trpc.procedure.use(loggerMiddleware);
