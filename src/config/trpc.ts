@@ -11,6 +11,6 @@ export const createContext = (
   };
 };
 
-type Context = inferAsyncReturnType<typeof createContext>;
+export type Context = inferAsyncReturnType<typeof createContext>;
 
 export const trpc = initTRPC.context<Context>().create();

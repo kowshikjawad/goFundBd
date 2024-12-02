@@ -1,9 +1,9 @@
 import { TRPCError } from "@trpc/server";
 export const successResponse = (data: any, code: number, message?: string) => ({
   status: "success",
-  message,
-  code,
   data,
+  code,
+  message,
 });
 
 export const errorResponse = (error: unknown, trpcError: TRPCError) => {

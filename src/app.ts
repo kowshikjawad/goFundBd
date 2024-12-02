@@ -9,7 +9,12 @@ import { createContext } from "./config/trpc";
 const runApp = async () => {
   dotenv.config();
   const app: Application = express();
-  app.use(cors());
+  app.use(
+    cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+    })
+  );
   app.use(express.json());
 
   const trpcApiEndpoint = "/api/trpc";
