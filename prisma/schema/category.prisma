@@ -1,5 +1,5 @@
 model Category {
-  category_id String     @id @unique
-  name        String
+  category_id String     @id @default(uuid())
+  name        String     @unique
   campaigns   Campaign[]
 }

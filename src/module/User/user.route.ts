@@ -1,6 +1,9 @@
 import { trpc } from "../../config/trpc";
 import { authMiddleware } from "../../middlewares/authMiddleware";
-import { userValidationSchemas } from "./user.validation";
+import {
+  createUserValidationSchema,
+  loginUserValidationSchema,
+} from "./user.validation";
 
 import { loggerMiddleware } from "../../middlewares/loggerMiddleware";
 import {
@@ -9,9 +12,6 @@ import {
   getUsersController,
   userLoginController,
 } from "./user.controller";
-
-const { createUserValidationSchema, loginUserValidationSchema } =
-  userValidationSchemas;
 
 const trpcProcedure = trpc.procedure.use(loggerMiddleware);
 

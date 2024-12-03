@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
-export const successResponse = (data: any, code: number) => ({
+export const successResponse = (data: any, code: number, message?: string) => ({
   status: "success",
+  message,
   code,
   data,
 });

@@ -5,7 +5,7 @@ enum CampaignStatus {
 }
 
 model Campaign {
-  campaign_id   String           @id @default(uuid())
+  campaign_id   String         @id @default(uuid())
   title         String
   description   String
   goal_amount   Float

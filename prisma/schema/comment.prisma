@@ -1,5 +1,5 @@
 model Comment {
-  comment_id  String      @id @default(uuid())
+  comment_id  String   @id @default(uuid())
   user_id     String
   campaign_id String
   content     String

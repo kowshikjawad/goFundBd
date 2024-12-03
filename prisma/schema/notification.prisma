@@ -1,5 +1,5 @@
 model Notification {
-  notification_id String      @id @default(uuid())
+  notification_id String   @id @default(uuid())
   user_id         String
   campaign_id     String
   message         String
