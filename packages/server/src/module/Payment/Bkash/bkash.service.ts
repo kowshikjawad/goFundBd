@@ -76,7 +76,6 @@ export const getBkashHeaders = async (id_token: string) => {
 
 export const createBkashPaymentService = async (
   amount: string,
-  id: string,
   bkashToken: string
 ) => {
   const { data } = await axios.post(
@@ -92,6 +91,7 @@ export const createBkashPaymentService = async (
     },
     { headers: await getBkashHeaders(bkashToken) }
   );
+  return data;
 };
 
 const bkashPaymentService = {

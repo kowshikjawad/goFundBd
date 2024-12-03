@@ -1,10 +1,13 @@
 import { TRPCError } from "@trpc/server";
-export const successResponse = (data: any, code: number, message?: string) => ({
-  status: "success",
-  data,
-  code,
-  message,
-});
+export const successResponse = (data: any, code: number, message?: string) => {
+  console.log("Success Response from utils:", { data, code }); // Logging for debugging
+  return {
+    status: "success",
+    data,
+    code,
+    message,
+  };
+};
 
 export const errorResponse = (error: unknown, trpcError: TRPCError) => {
   // Ensure error is an instance of TRPCError

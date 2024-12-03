@@ -78,16 +78,11 @@ import { createBkashPaymentService } from "./bkash.service";
 
 export const createBkashPaymentController = async (
   amount: string,
-  id: string,
   bkashToken: string
 ) => {
   try {
-    const paymentBkash = await createBkashPaymentService(
-      amount,
-      id,
-      bkashToken
-    );
-    return { paymentBkash };
+    const paymentBkash = await createBkashPaymentService(amount, bkashToken);
+    return successResponse({ paymentBkash }, 201);
   } catch (error) {
     console.log(error);
     const trpcError = new TRPCError({
