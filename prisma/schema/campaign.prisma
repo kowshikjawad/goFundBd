@@ -1,0 +1,25 @@
+enum CampaignStatus {
+  Pending
+  Active
+  Completed
+}
+
+model Campaign {
+  campaign_id   String           @id @default(uuid())
+  title         String
+  description   String
+  goal_amount   Float
+  raised_amount Float
+  status        CampaignStatus
+  start_date    DateTime
+  end_date      DateTime
+  category_id   String
+  owner_id      String
+
+  category     Category       @relation(fields: [category_id], references: [category_id])
+  owner        User           @relation(fields: [owner_id], references: [user_id])
+  Donation     Donation[]
+  Comment      Comment[]
+  Notification Notification[]
+  Chat         Chat[]
+}

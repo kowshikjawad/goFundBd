@@ -1,0 +1,22 @@
+enum PaymentStatus {
+  Pending
+  Completed
+  Failed
+}
+
+enum PaymentMethod {
+  Stripe
+  PayPal
+  Other
+}
+
+model Payment {
+  payment_id         String           @id @default(uuid())
+  donation_id        String
+  payment_method     PaymentMethod
+  payment_status     PaymentStatus
+  transaction_date   DateTime      @default(now())
+  transaction_amount Float
+
+  donation Donation @relation(fields: [donation_id], references: [donation_id])
+}
