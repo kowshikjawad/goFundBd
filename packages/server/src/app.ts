@@ -34,10 +34,6 @@ const runApp = async () => {
       trpcApiEndpoint,
       playgroundEndpoint,
       router: appRouter,
-      // uncomment this if you're using superjson
-      // request: {
-      //   superjson: true,
-      // },
     })
   );
 
