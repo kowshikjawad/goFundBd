@@ -1,11 +1,7 @@
-// const axios = require("axios");
-// const paymentModel = require("../model/paymentModel");
-// const { v4: uuidv4 } = require("uuid");
 import { v4 as UUID4 } from "uuid";
 
 import axios from "axios";
-
-// class PaymentService {
+import prisma from "../../../config/database";
 
 //   async createPayment(amount) {
 //     const { data } = await axios.post(
@@ -63,8 +59,6 @@ import axios from "axios";
 //   }
 // }
 
-// module.exports = new PaymentService();
-
 export const getBkashHeaders = async (id_token: string) => {
   return {
     "Content-Type": "application/json",
@@ -91,11 +85,20 @@ export const createBkashPaymentService = async (
     },
     { headers: await getBkashHeaders(bkashToken) }
   );
+
+  console.log(data);
+
   return data;
+};
+
+export const getBkashPaymentService = async () => {
+  const result = await prisma.bkash.findMany();
+  return result;
 };
 
 const bkashPaymentService = {
   createBkashPaymentService,
+  getBkashPaymentService,
 };
 
 export default bkashPaymentService;

@@ -5,6 +5,8 @@ export const createContext = (
   opts: trpcExpress.CreateExpressContextOptions
 ) => {
   const { req, res } = opts;
+  console.log("context req", req);
+  console.log("context res", res);
   return {
     req,
     res,

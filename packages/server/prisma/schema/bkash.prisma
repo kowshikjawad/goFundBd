@@ -1,0 +1,17 @@
+model Bkash {
+  id                    String   @id @default(uuid())
+  paymentID             String   @unique
+  bkashURL              String
+  callbackURL           String
+  successCallbackURL    String
+  failureCallbackURL    String
+  cancelledCallbackURL  String
+  amount                String
+  intent                String
+  currency              String
+  paymentCreateTime     String
+  transactionStatus     String
+  merchantInvoiceNumber String
+  statusCode            String
+  statusMessage         String
+}

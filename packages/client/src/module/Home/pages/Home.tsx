@@ -4,16 +4,26 @@ import { trpc } from "../../../lib/trpc";
 const Home: React.FC = () => {
   const mutation = trpc.bkash.createBkashPayment.useMutation();
 
-  const pay = () => {
+  const handlePay = async () => {
     const amount = "1100";
-    const data: any = mutation.mutate({ amount });
-    window.location.href = data.bkashURL;
+    mutation.mutate(
+      { amount },
+      {
+        onSuccess: (response: any) => {
+          console.log("Payment successful:", response);
+          window.location.href = response?.data?.bkashURL;
+        },
+        onError: (error) => {
+          console.error("Error occurred during payment:", error);
+        },
+      }
+    );
   };
 
   return (
     <div>
       <h1>Users</h1>
-      <button onClick={pay}>Click to Pay</button>
+      <button onClick={handlePay}>Click to Pay</button>
     </div>
   );
 };
