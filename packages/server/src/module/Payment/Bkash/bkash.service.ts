@@ -77,7 +77,7 @@ export const createBkashPaymentService = async (
     {
       mode: "0011",
       payerReference: " ",
-      callbackURL: "http://localhost:5000/api/bkash/payment/callback",
+      callbackURL: "http://localhost:3000/api/trpc/bkash/payment/callback",
       amount: amount,
       currency: "BDT",
       intent: "sale",
@@ -85,8 +85,6 @@ export const createBkashPaymentService = async (
     },
     { headers: await getBkashHeaders(bkashToken) }
   );
-
-  console.log(data);
 
   return data;
 };

@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 export const successResponse = (data: any, code: number, message?: string) => {
-  console.log("Success Response from utils:", { data, code }); // Logging for debugging
+  // Logging for debugging
   return {
     status: "success",
     data,
