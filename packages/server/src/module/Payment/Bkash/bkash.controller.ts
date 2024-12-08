@@ -2,8 +2,10 @@ import { TRPCError } from "@trpc/server";
 import { errorResponse, successResponse } from "../../../utils/httpResponse";
 import {
   createBkashPaymentService,
+  executeBkashPaymentService,
   getBkashPaymentService,
 } from "./bkash.service";
+import { Response } from "express";
 
 export const createBkashPaymentController = async (
   amount: string,
@@ -38,8 +40,26 @@ export const getBkashPaymentController = async () => {
 
 export const callbackBkashPaymentController = async (
   paymentId: string,
-  status: string
-) => {};
+  status: string,
+  res: Response,
+  bkashToken: string
+) => {
+  if (status === "cancel" || status === "failure") {
+    return res.redirect(`${process.env.FRONTEND_URL}/error?message=${status}`);
+  }
+  if (status === "success") {
+    try {
+      await executeBkashPaymentService(paymentId, bkashToken);
+    } catch (error) {
+      console.log(error);
+      const trpcError = new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "An unexpected error occurred, please try again later.",
+      });
+      return errorResponse(error, trpcError);
+    }
+  }
+};
 
 const bkashPaymentController = {
   createBkashPaymentController,
