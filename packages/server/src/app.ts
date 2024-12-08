@@ -5,18 +5,14 @@ import cors from "cors";
 import { expressHandler } from "trpc-playground/handlers/express";
 import dotenv from "dotenv";
 import { createContext } from "./config/trpc";
-import { globalRouteMiddleware } from "./middlewares/globalRouteMiddleware";
 
 const runApp = async () => {
   dotenv.config();
   const app: Application = express();
 
-  // Add global middleware for logging
-  app.use(globalRouteMiddleware);
-
   app.use(
     cors({
-      origin: "http://localhost:5173",
+      origin: process.env.FRONTEND_URL,
       credentials: true,
     })
   );
