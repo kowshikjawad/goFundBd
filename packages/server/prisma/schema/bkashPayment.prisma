@@ -3,7 +3,7 @@ model BkashPayment {
   bkashPaymentID        String   @unique
   trxID                 String
   transactionStatus     String
-  Amount                Float
+  amount                Float
   paymentExecuteTime    DateTime
   merchantInvoiceNumber String
   payerReference        String
