@@ -3,31 +3,21 @@ import { errorResponse, successResponse } from "../../../utils/httpResponse";
 import {
   createBkashPaymentService,
   executeBkashPaymentService,
-  getBkashPaymentService,
 } from "./bkash.service";
 import { Response } from "express";
 
 export const createBkashPaymentController = async (
   amount: string,
-  bkashToken: string
+  bkashToken: string,
+  donation_id: string
 ) => {
   try {
-    const paymentBkash = await createBkashPaymentService(amount, bkashToken);
+    const paymentBkash = await createBkashPaymentService(
+      amount,
+      bkashToken,
+      donation_id
+    );
     return successResponse(paymentBkash, 201);
-  } catch (error) {
-    console.log(error);
-    const trpcError = new TRPCError({
-      code: "INTERNAL_SERVER_ERROR",
-      message: "An unexpected error occurred, please try again later.",
-    });
-    return errorResponse(error, trpcError);
-  }
-};
-
-export const getBkashPaymentController = async () => {
-  try {
-    const paymentBkash = await getBkashPaymentService();
-    return successResponse(paymentBkash, 200);
   } catch (error) {
     console.log(error);
     const trpcError = new TRPCError({
@@ -63,7 +53,6 @@ export const callbackBkashPaymentController = async (
 
 const bkashPaymentController = {
   createBkashPaymentController,
-  getBkashPaymentController,
   callbackBkashPaymentController,
 };
 

@@ -16,8 +16,12 @@ export const bkashRouter = trpc.router({
     .input(bkashPaymentValidationSchema)
     .mutation(({ input, ctx }) => {
       const { bkashToken } = ctx;
-      const { amount } = input;
-      const result = createBkashPaymentController(amount, bkashToken);
+      const { amount, donation_id } = input;
+      const result = createBkashPaymentController(
+        amount,
+        bkashToken,
+        donation_id
+      );
       return result;
     }),
   callBack: trpcProcedure.query(({ ctx }) => {
