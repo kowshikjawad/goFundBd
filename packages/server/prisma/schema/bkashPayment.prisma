@@ -1,0 +1,33 @@
+model BkashPayment {
+  id                    String   @default(uuid())
+  bkashPaymentID        String   @unique
+  trxID                 String
+  transactionStatus     String
+  amount                Float
+  paymentExecuteTime    DateTime
+  merchantInvoiceNumber String
+  payerReference        String
+  customerMsisdn        String
+  payerAccount          String
+  statusCode            String
+  statusMessage         String
+  payment_id            String   @unique
+  payment               Payment  @relation(fields: [payment_id], references: [payment_id])
+}
+
+// {
+//   paymentID: 'TR001129RKQft1733595647501',
+//   trxID: 'BL810L3JAX',
+//   transactionStatus: 'Completed',
+//   amount: '1100',
+//   currency: 'BDT',
+//   intent: 'sale',
+//   paymentExecuteTime: '2024-12-08T00:22:02:285 GMT+0600',
+//   merchantInvoiceNumber: 'Inv043c2',
+//   payerType: 'Customer',
+//   payerReference: ' ',
+//   customerMsisdn: '01619777282',
+//   payerAccount: '01619777282',
+//   statusCode: '0000',
+//   statusMessage: 'Successful'
+// }
