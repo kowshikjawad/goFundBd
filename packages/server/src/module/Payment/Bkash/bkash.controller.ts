@@ -34,20 +34,24 @@ export const callbackBkashPaymentController = async (
   res: Response,
   bkashToken: string
 ) => {
-  if (status === "cancel" || status === "failure") {
-    return res.redirect(`${process.env.FRONTEND_URL}/error?message=${status}`);
-  }
-  if (status === "success") {
-    try {
-      await executeBkashPaymentService(paymentId, bkashToken);
-    } catch (error) {
-      console.log(error);
-      const trpcError = new TRPCError({
-        code: "INTERNAL_SERVER_ERROR",
-        message: "An unexpected error occurred, please try again later.",
-      });
-      return errorResponse(error, trpcError);
+  // Handle cancel or failure status
+  try {
+    if (status === "cancel" || status === "failure") {
+      return null;
     }
+    // Handle success status
+    else if (status === "success") {
+      await executeBkashPaymentService(paymentId, bkashToken);
+      // Optionally send a success response here if needed
+      return res.send("Payment successful"); // Add response as needed
+    }
+  } catch (error) {
+    console.log(error);
+    const trpcError = new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "An unexpected error occurred, please try again later.",
+    });
+    return errorResponse(error, trpcError);
   }
 };
 
