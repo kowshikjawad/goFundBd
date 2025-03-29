@@ -20,7 +20,9 @@ export const userRouter = trpc.router({
 
   createUser: trpcProcedure
     .input(createUserValidationSchema)
-    .mutation(({ input }) => createUserController(input)),
+    .mutation(({ input }) => {
+      return createUserController(input);
+    }),
 
   login: trpcProcedure
     .input(loginUserValidationSchema)

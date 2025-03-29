@@ -7,6 +7,7 @@ enum PaymentStatus {
 enum PaymentMethod {
   Stripe
   PayPal
+  Bkash
   Other
 }
 
@@ -17,6 +18,6 @@ model Payment {
   payment_status     PaymentStatus
   transaction_date   DateTime      @default(now())
   transaction_amount Float
-
-  donation Donation @relation(fields: [donation_id], references: [donation_id])
+  donation           Donation      @relation(fields: [donation_id], references: [donation_id])
+  BkashPayment       BkashPayment?
 }

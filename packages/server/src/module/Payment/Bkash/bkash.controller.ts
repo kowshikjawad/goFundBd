@@ -1,93 +1,50 @@
 import { TRPCError } from "@trpc/server";
 import { errorResponse, successResponse } from "../../../utils/httpResponse";
-import { createBkashPaymentService } from "./bkash.service";
-
-// const paymentRouter = router({
-//   createPayment: publicProcedure
-//     .input(
-//       z.object({
-//         amount: z.string(),
-//         userId: z.string(),
-//       })
-//     )
-//     .mutation(async ({ input }) => {
-//       const { amount, userId } = input;
-//       globals.set("userId", userId);
-//       const data = await paymentService.createPayment(amount);
-//       return { bkashURL: data.bkashURL };
-//     }),
-
-//   callback: publicProcedure
-//     .input(
-//       z.object({
-//         paymentID: z.string(),
-//         status: z.string(),
-//       })
-//     )
-//     .mutation(async ({ input }) => {
-//       const { paymentID, status } = input;
-
-//       if (status === "cancel" || status === "failure") {
-//         throw new Error(`http://localhost:5173/error?message=${status}`);
-//       }
-
-//       if (status === "success") {
-//         const data = await paymentService.executePayment(paymentID);
-
-//         if (data && data.statusCode === "0000") {
-//           const userId = globals.get("userId");
-//           await paymentService.savePayment(
-//             userId,
-//             paymentID,
-//             data.trxID,
-//             data.paymentExecuteTime,
-//             data.amount
-//           );
-//           return { redirect: `http://localhost:5173/success` };
-//         }
-
-//         throw new Error(`http://localhost:5173/error?message=${data.statusMessage}`);
-//       }
-//     }),
-
-//   refund: publicProcedure
-//     .input(
-//       z.object({
-//         trxID: z.string(),
-//       })
-//     )
-//     .mutation(async ({ input }) => {
-//       const { trxID } = input;
-
-//       const payment = await paymentService.findPaymentByTrxID(trxID);
-//       if (!payment) {
-//         throw new Error("Refund failed: Payment not found");
-//       }
-
-//       const data = await paymentService.refundTransaction(payment, trxID);
-
-//       if (data && data.statusCode === "0000") {
-//         return { message: "Refund successful" };
-//       }
-
-//       throw new Error("Refund failed: Transaction error");
-//     }),
-// });
-
-// module.exports = paymentRouter;
+import {
+  createBkashPaymentService,
+  executeBkashPaymentService,
+} from "./bkash.service";
+import { Response } from "express";
 
 export const createBkashPaymentController = async (
   amount: string,
-  id: string,
-  bkashToken: string
+  bkashToken: string,
+  donation_id: string
 ) => {
   try {
     const paymentBkash = await createBkashPaymentService(
       amount,
-      id,
-      bkashToken
+      bkashToken,
+      donation_id
     );
-    return { paymentBkash };
+    return successResponse(paymentBkash, 201);
+  } catch (error) {
+    console.log(error);
+    const trpcError = new TRPCError({
+      code: "INTERNAL_SERVER_ERROR",
+      message: "An unexpected error occurred, please try again later.",
+    });
+    return errorResponse(error, trpcError);
+  }
+};
+
+export const callbackBkashPaymentController = async (
+  paymentId: string,
+  status: string,
+  res: Response,
+  bkashToken: string
+) => {
+  // Handle cancel or failure status
+  try {
+    if (status === "cancel" || status === "failure") {
+      return null;
+    }
+    // Handle success status
+    else if (status === "success") {
+      await executeBkashPaymentService(paymentId, bkashToken);
+      // Optionally send a success response here if needed
+      return res.send("Payment successful"); // Add response as needed
+    }
   } catch (error) {
     console.log(error);
     const trpcError = new TRPCError({
@@ -100,6 +57,7 @@ export const createBkashPaymentController = async (
 
 const bkashPaymentController = {
   createBkashPaymentController,
+  callbackBkashPaymentController,
 };
 
 export default bkashPaymentController;
